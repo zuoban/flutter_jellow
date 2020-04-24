@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_jellow/pages/moments.dart';
+import 'package:flutter_jellow/pages/index_page.dart';
+import 'package:flutter_jellow/pages/moments_page.dart';
 import 'package:flutter_jellow/request/login_interceptor.dart';
 import 'package:flutter_jellow/request/requests.dart';
 
 void main() {
-  dio.interceptors..add(LoginInterceptor())..add(LogInterceptor());
+  dio.interceptors
+    ..add(LoginInterceptor())
+    ..add(LogInterceptor(requestBody: true, responseBody: true));
   runApp(MyApp());
 }
 
@@ -19,7 +22,11 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.black,
         accentColor: Color(0XFFB2B2B2),
       ),
-      home: MyHomePage(),
+      routes: {
+        "/": (_) => IndexPage(),
+        "/moments": (_) => MomentsPage(),
+      },
+      initialRoute: "/",
     );
   }
 }
@@ -32,8 +39,42 @@ class MyHomePage extends StatelessWidget {
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(color: Color(0xFF010002)),
         child: Column(
-          children: <Widget>[_header(), Moments()],
+          children: <Widget>[_header(), MomentsPage()],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.lightBlue,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.group,
+                size: 30,
+              ),
+              title: Text(
+                '动态',
+                style: TextStyle(fontSize: 14),
+              )),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.description,
+              size: 30,
+            ),
+            title: Text(
+              '广场',
+              style: TextStyle(fontSize: 14),
+            ),
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+                size: 30,
+              ),
+              title: Text(
+                '我的',
+                style: TextStyle(fontSize: 14),
+              )),
+        ],
       ),
     );
   }

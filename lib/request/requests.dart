@@ -28,11 +28,12 @@ Future<MomentsVo> recommendFeedList() async {
   return MomentsVo.fromJson(resp.data);
 }
 
-Future<String> mediaMeta({String id, String type}) async {
+Future<Map<String, dynamic>> mediaMeta({String id, String type}) async {
   var resp = await dio.post(
     'https://api.jellow.club/1.0/mediaMeta/interactive',
     queryParameters: {'id': id, 'type': type, 'trigger': 'auto'},
   );
   print('@@ >> ' + resp.data.toString());
-  return resp.data['url'];
+  var result = {'url': resp.data['url'], 'headers': resp.data['headers']};
+  return result;
 }
