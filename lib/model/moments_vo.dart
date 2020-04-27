@@ -1,3 +1,23 @@
+class MomentList {
+  List<Data> data;
+
+  MomentList(this.data);
+
+  factory MomentList.fromJson(Map<String, dynamic> json) {
+    return MomentList(json['data'] != null
+        ? (json['data'] as List).map((i) => Data.fromJson(i)).toList()
+        : null);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class MomentsVo {
   List<Data> data;
   LoadMoreKey loadMoreKey;
@@ -50,7 +70,7 @@ class Data {
   String subtitle;
   Topic topic;
   String type;
-  List<dynamic> urlsInText;
+  List<UrlsInText> urlsInText;
   User user;
   Video video;
 
@@ -108,8 +128,11 @@ class Data {
       subtitle: json['subtitle'],
       topic: json['topic'] != null ? Topic.fromJson(json['topic']) : null,
       type: json['type'],
-      urlsInText:
-          json['urlsInText'] != null ? (json['urlsInText'] as List) : null,
+      urlsInText: json['urlsInText'] != null
+          ? (json['urlsInText'] as List)
+              .map((it) => UrlsInText.fromJson(it))
+              .toList()
+          : null,
       user: json['user'] != null ? User.fromJson(json['user']) : null,
       video: json['video'] != null ? Video.fromJson(json['video']) : null,
     );
@@ -822,6 +845,33 @@ class VideoImage {
     data['format'] = this.format;
     data['picUrl'] = this.picUrl;
     data['thumbnailUrl'] = this.thumbnailUrl;
+    return data;
+  }
+}
+
+class UrlsInText {
+  String originalUrl;
+  String title;
+  String type;
+  String url;
+
+  UrlsInText({this.originalUrl, this.title, this.type, this.url});
+
+  factory UrlsInText.fromJson(Map<String, dynamic> json) {
+    return UrlsInText(
+      originalUrl: json['originalUrl'],
+      title: json['title'],
+      type: json['type'],
+      url: json['url'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['originalUrl'] = this.originalUrl;
+    data['title'] = this.title;
+    data['type'] = this.type;
+    data['url'] = this.url;
     return data;
   }
 }

@@ -41,6 +41,9 @@ class _PhotoViewPageState extends State<PhotoViewPage> {
             scrollPhysics: const BouncingScrollPhysics(),
             builder: (BuildContext context, int index) {
               return PhotoViewGalleryPageOptions(
+                onTapUp: (_, __, ___) {
+                  Navigator.of(context).pop();
+                },
                 imageProvider: NetworkImage(widget.photoUrls[index]),
                 minScale: PhotoViewComputedScale.contained * 0.8,
                 maxScale: PhotoViewComputedScale.covered * 1.1,

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jellow/model/moments_vo.dart';
 import 'package:flutter_jellow/pages/moments/photo_view_page.dart';
 
+/// 图片控件
 class MomentsPhoto extends StatelessWidget {
   final List<Picture> photos;
 
   final List<String> photoUrls;
 
-  MomentsPhoto({Key key, this.photos})
+  MomentsPhoto({Key key, @required this.photos})
       : photoUrls = photos.map((p) => p.picUrl).toList(),
         super(key: key);
 

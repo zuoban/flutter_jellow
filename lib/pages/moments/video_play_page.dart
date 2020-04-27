@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_jellow/common/api/api.dart';
 import 'package:flutter_jellow/model/moments_vo.dart';
-import 'package:flutter_jellow/request/requests.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayPage extends StatefulWidget {
@@ -27,10 +27,9 @@ class _VideoPlayPageState extends State<VideoPlayPage> {
     super.initState();
 
     if (widget.video != null) {
-      mediaMeta(id: widget.id, type: widget.type).then((result) {
+      MomentsAPI.mediaMeta(id: widget.id, type: widget.type).then((result) {
         print(' playing $result');
         print(jsonEncode(widget.video));
-        Map<String, dynamic> headers = (result['headers']);
         _controller = VideoPlayerController.network(
           result['url'],
         )..initialize().then((_) {
