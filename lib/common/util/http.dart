@@ -16,6 +16,8 @@ class HttpUtil {
 
   static Dio _dio;
 
+  static Dio _downloadDio = Dio();
+
   /// 用于获取 token
   static Dio _anotherDio;
 
@@ -96,5 +98,10 @@ class HttpUtil {
       queryParameters: queryParameters,
       options: options,
     );
+  }
+
+  Future<Response> getBytes(String url) async {
+    return await _downloadDio.get(url,
+        options: Options(responseType: ResponseType.bytes));
   }
 }

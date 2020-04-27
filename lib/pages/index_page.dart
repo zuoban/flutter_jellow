@@ -82,8 +82,10 @@ class _IndexPageState extends State<IndexPage> {
               _currentIndex = index;
             });
           } else {
-            _refreshController.callRefresh(
-                duration: Duration(milliseconds: 500));
+            if (index == 1) {
+              _refreshController.callRefresh(
+                  duration: Duration(milliseconds: 500));
+            }
 //            _scrollController.animateTo(0,
 //                duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
           }

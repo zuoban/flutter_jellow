@@ -1,4 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_jellow/common/util/http.dart';
+import 'package:flutter_jellow/common/widget/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -34,8 +41,26 @@ class _PhotoViewPageState extends State<PhotoViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Stack(
+    return Scaffold(
+      floatingActionButton: IconButton(
+        onPressed: () async {
+          final url = widget.photoUrls[_currentPage];
+          print(url);
+          final resp = await HttpUtil().getBytes(url);
+
+          if (await Permission.storage.request().isGranted) {
+            final String result = await ImageGallerySaver.saveImage(
+                Uint8List.fromList(resp.data));
+
+            String message =
+                '图片已保存至 ${result.substring(0, result.lastIndexOf('/'))} 文件夹';
+
+            toastInfo(msg: message, toastLength: Toast.LENGTH_LONG);
+          }
+        },
+        icon: Icon(Icons.get_app),
+      ),
+      body: Stack(
         children: <Widget>[
           PhotoViewGallery.builder(
             scrollPhysics: const BouncingScrollPhysics(),
